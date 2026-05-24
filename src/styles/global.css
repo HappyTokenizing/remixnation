@@ -1,0 +1,262 @@
+/* =========================================================
+   Happy's Remix Nation v3 — continuous scroll-driven pan/zoom
+   ========================================================= */
+
+:root {
+  --font-display: 'Bowlby One', 'Impact', sans-serif;
+  --font-marker: 'Permanent Marker', cursive;
+  --font-sans: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+
+  --vh: 1vh;
+
+  --ref-screen-width: 1440;
+  --site-padding-x: min(48px, calc(32 * 100vw / var(--ref-screen-width)));
+  --site-padding-y: var(--site-padding-x);
+
+  --c-bg: #0a0a1f;
+  --c-bg-2: #1a0d2e;
+  --c-purple-deep: #2d1b69;
+  --c-purple: #6a1b9a;
+  --c-blue: #1e90ff;
+  --c-blue-electric: #00bfff;
+  --c-pink: #ff2d95;
+  --c-magenta: #d100d1;
+  --c-green-neon: #00ff88;
+  --c-yellow: #FFD93D;
+  --c-red: #ff3b3b;
+  --c-discord: #5865F2;
+  --c-white: #ffffff;
+  --c-cream: #fff8e7;
+
+  --content-width: calc(100vw - var(--site-padding-x) * 2);
+  --content-unit: calc(var(--content-width) / var(--ref-screen-width));
+
+  --h1: max(72px, calc(var(--content-unit) * 220));
+  --h2: max(56px, calc(var(--content-unit) * 140));
+  --h3: max(40px, calc(var(--content-unit) * 90));
+  --sub1: max(18px, calc(var(--content-unit) * 26));
+  --sub2: max(16px, calc(var(--content-unit) * 20));
+  --body1: max(16px, calc(var(--content-unit) * 18));
+  --body2: max(14px, calc(var(--content-unit) * 15));
+  --btn1: max(16px, calc(var(--content-unit) * 17));
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background: var(--c-bg);
+  color: var(--c-white);
+  font-family: var(--font-sans);
+  font-size: var(--body1);
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--c-green-neon);
+  color: var(--c-bg);
+  text-shadow: none;
+}
+
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+img { display: block; max-width: 100%; }
+
+/* =========================================================
+   Banner stage — fixed layer, continuously driven by scroll
+   Short transition (no abrupt 1.2s jumps) since the values
+   themselves change continuously via JS.
+   ========================================================= */
+
+.banner-stage {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: var(--c-bg);
+  overflow: hidden;
+}
+
+.banner-stage__media {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform: translate(-50%, -50%) scale(var(--banner-scale, 1));
+  transform-origin: var(--banner-origin-x, 50%) var(--banner-origin-y, 50%);
+  /* Short transition smooths frame-to-frame; main motion comes from
+     the JS-driven CSS-var updates on every scroll frame. */
+  transition: transform 0.15s linear, filter 0.3s ease;
+  filter: var(--banner-filter, none);
+  will-change: transform;
+  background: var(--c-bg);
+  /* Disable native video controls/UI just in case */
+  pointer-events: none;
+}
+
+.banner-stage__vignette {
+  position: absolute;
+  inset: 0;
+  background: var(--banner-vignette,
+    radial-gradient(ellipse at center, rgba(10,10,31,0) 40%, rgba(10,10,31,0.55) 100%));
+  transition: background 0.3s ease;
+  pointer-events: none;
+}
+
+.banner-stage__tint {
+  position: absolute;
+  inset: 0;
+  background: var(--banner-tint, transparent);
+  mix-blend-mode: color;
+  transition: background 0.3s ease;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* =========================================================
+   Scroll container
+   - scroll-snap: PROXIMITY (not mandatory) — gives a soft pull
+     toward sections but lets you stop mid-scroll to read.
+   ========================================================= */
+
+.scroll-container {
+  position: relative;
+  z-index: 1;
+  scroll-snap-type: y proximity;
+  height: calc(var(--vh) * 100);
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+.scroll-container::-webkit-scrollbar { display: none; }
+.scroll-container { scrollbar-width: none; }
+
+.section {
+  position: relative;
+  width: 100vw;
+  height: calc(var(--vh) * 100);
+  scroll-snap-align: start;
+  overflow: hidden;
+}
+
+.section__content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: var(--site-padding-y) var(--site-padding-x);
+  text-align: center;
+}
+
+/* Display type */
+.display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
+}
+
+.display--xl { font-size: var(--h1); }
+.display--lg { font-size: var(--h2); }
+.display--md { font-size: var(--h3); }
+
+.marker {
+  font-family: var(--font-marker);
+  font-weight: 400;
+  letter-spacing: 0.005em;
+}
+
+/* Effects */
+.chrome-text {
+  background: linear-gradient(
+    180deg, #ffffff 0%, #ffffff 45%,
+    var(--c-blue-electric) 50%, var(--c-blue) 55%, #ffffff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 4px 0 rgba(0, 0, 0, 0.5))
+          drop-shadow(0 0 20px rgba(0, 191, 255, 0.5));
+}
+
+.glow-pink {
+  color: var(--c-pink);
+  text-shadow: 0 0 8px rgba(255, 45, 149, 0.9), 0 0 24px rgba(255, 45, 149, 0.6);
+}
+.glow-green {
+  color: var(--c-green-neon);
+  text-shadow: 0 0 8px rgba(0, 255, 136, 0.9), 0 0 24px rgba(0, 255, 136, 0.6);
+}
+.glow-blue {
+  color: var(--c-blue-electric);
+  text-shadow: 0 0 8px rgba(0, 191, 255, 0.9), 0 0 24px rgba(0, 191, 255, 0.6);
+}
+.glow-yellow {
+  color: var(--c-yellow);
+  text-shadow: 0 0 8px rgba(255, 217, 61, 0.9), 0 0 24px rgba(255, 217, 61, 0.6);
+}
+
+.readable {
+  text-shadow:
+    -2px -2px 0 var(--c-bg),
+    2px -2px 0 var(--c-bg),
+    -2px 2px 0 var(--c-bg),
+    2px 2px 0 var(--c-bg),
+    0 0 12px rgba(0, 0, 0, 0.6);
+}
+
+/* Animations */
+@keyframes wiggle {
+  0%, 100% { transform: rotate(-2deg); }
+  50% { transform: rotate(2deg); }
+}
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+@keyframes pulse-scale {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0.3; }
+}
+
+.anim-wiggle { animation: wiggle 3s ease-in-out infinite; }
+.anim-float { animation: float-y 4s ease-in-out infinite; }
+.anim-pulse { animation: pulse-scale 2.5s ease-in-out infinite; }
+.anim-blink { animation: blink 1.2s steps(2) infinite; }
+
+/* Floating callout box */
+.callout {
+  display: inline-block;
+  padding: 10px 14px;
+  background: #1a1a1a;
+  border: 2px solid var(--c-white);
+  border-radius: 6px;
+  font-family: var(--font-display);
+  font-size: max(12px, calc(var(--content-unit) * 13));
+  line-height: 1.3;
+  color: var(--c-white);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  white-space: normal;
+  max-width: 100%;
+}
+
+.callout--pink { box-shadow: 4px 4px 0 var(--c-pink); }
+.callout--green { box-shadow: 4px 4px 0 var(--c-green-neon); }
+.callout--blue { box-shadow: 4px 4px 0 var(--c-blue-electric); }
+.callout--yellow { box-shadow: 4px 4px 0 var(--c-yellow); }
