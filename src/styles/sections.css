@@ -264,8 +264,21 @@
 
 @media (max-width: 900px) {
   .closing__inner {
-    padding: 16px 16px;
-    gap: 8px;
+    padding: 14px 12px;
+    gap: 6px;
+    max-width: calc(100vw - 16px);
+    border-radius: 12px;
+  }
+  .closing__sub {
+    font-size: 12px;
+    line-height: 1.35;
+  }
+  .closing__footer {
+    font-size: 10px;
+  }
+  .social-btn {
+    padding: 10px 18px;
+    font-size: 14px;
   }
 }
 
