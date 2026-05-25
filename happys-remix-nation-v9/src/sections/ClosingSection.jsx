@@ -28,7 +28,7 @@ const ClosingSection = forwardRef(function ClosingSection({ opacity = 1 }, ref) 
 
           <div className="closing__buttons">
             <a
-              href="https://discord.gg/remixnation"
+              href="https://discord.gg/Fw3pb3YT"
               target="_blank"
               rel="noopener noreferrer"
               className="social-btn social-btn--discord"

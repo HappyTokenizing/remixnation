@@ -12,7 +12,7 @@ export default function Header() {
           <span className="header__live-dot" /> LIVE
         </span>
         <a
-          href="https://discord.gg/remixnation"
+          href="https://discord.gg/Fw3pb3YT"
           target="_blank"
           rel="noopener noreferrer"
           className="header__cta"

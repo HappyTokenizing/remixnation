@@ -96,24 +96,12 @@ img { display: block; max-width: 100%; }
   pointer-events: none;
 }
 
-/* Mobile fix for pan/zoom positioning.
-   The banner artwork is roughly 5:2 (very wide). On a tall mobile
-   viewport, object-fit: contain shrinks the image into a thin band
-   in the middle of the element, but transform-origin percentages are
-   measured against the ELEMENT box, not the image. So originX: 8%
-   refers to 8% of the empty element box, missing the artwork.
-   Fix: size the element itself to match the artwork's aspect ratio
-   (and make it large enough to dominate the viewport), so the contained
-   image fills the entire element and transform-origin percentages map
-   directly onto positions within the artwork. */
+/* Mobile: switch to cover so it fills the screen edge-to-edge
+   and we still get a visible image behind text */
 @media (max-width: 900px) {
   .banner-stage__media {
-    /* Match artwork aspect ratio (~5:2). Height drives width. */
-    height: 60vh;
-    width: calc(60vh * 2.5);
-    /* Already absolutely positioned & centered via translate(-50%, -50%);
-       these dimensions just resize the box. */
-    object-fit: contain;
+    object-fit: cover;
+    object-position: center center;
   }
 }
 

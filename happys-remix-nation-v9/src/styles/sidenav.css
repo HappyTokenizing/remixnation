@@ -1,0 +1,58 @@
+.sidenav {
+  position: fixed;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 90;
+  pointer-events: none;
+}
+
+.sidenav__list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 6px;
+  background: rgba(10, 10, 31, 0.6);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.sidenav__item { display: block; }
+
+.sidenav__dot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border-radius: 6px;
+  font-size: 18px;
+  opacity: 0.45;
+  filter: grayscale(0.4);
+  transition: all 0.2s ease;
+  pointer-events: auto;
+}
+
+.sidenav__dot:hover {
+  opacity: 0.85;
+  filter: grayscale(0);
+  transform: scale(1.1);
+}
+
+.sidenav__dot.is-active {
+  opacity: 1;
+  filter: grayscale(0);
+  background: rgba(0, 191, 255, 0.2);
+  box-shadow:
+    0 0 12px rgba(0, 191, 255, 0.6),
+    inset 0 0 0 2px var(--c-blue-electric);
+  animation: pulse-scale 1.6s ease-in-out infinite;
+}
+
+@media (max-width: 640px) {
+  .sidenav { display: none; }
+}

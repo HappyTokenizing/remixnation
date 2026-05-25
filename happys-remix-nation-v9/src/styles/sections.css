@@ -342,7 +342,6 @@
 /* Ensure founders always render first on all sizes */
 .team__grid { display: flex; flex-direction: column; }
 .team__row--founders { order: -1; }
-.team__row--mentors { order: 1; }
 
 @media (max-width: 1100px) {
   .team__row--mentors {

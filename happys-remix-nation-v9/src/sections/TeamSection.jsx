@@ -2,26 +2,25 @@ import { forwardRef } from 'react'
 
 const FOUNDERS = [
   { name: 'Happy Remixing', img: '/mentors/happyremixing.jpeg', hoverEmoji: '😃' },
-  { name: 'JonJonJovi',     img: '/mentors/jonjonjovi.gif',     hoverEmoji: '☠️' },
-  { name: 'V1nmon',         img: '/mentors/v1nmon.gif',         hoverEmoji: '🦜' },
-  { name: 'Meeksipoo',      img: '/mentors/meeks.jpg',          hoverEmoji: '💩' },
+  { name: 'JonJonJovi',     img: '/mentors/jovimon.webp',       hoverEmoji: '☠️' },
+  { name: 'V1nmon',         img: '/mentors/v1n.webp',           hoverEmoji: '🦜' },
+  { name: 'Meeksipoo',      img: '/mentors/meeks.webp',         hoverEmoji: '💩' },
 ]
 
 const MENTORS = [
-  { name: 'AllieRanae',    img: '/mentors/AllieRanae.webp',  hoverEmoji: '👑', role: 'Mentor' },
-  { name: 'RoRoTuck',      img: '/mentors/roro.webp',        hoverEmoji: '🍄', role: 'Mentor' },
-  { name: 'Eva Caridad',   img: '/mentors/Eva.webp',         hoverEmoji: '🎨', role: 'Mentor' },
-  { name: 'Tiffany Nisbet',img: '/mentors/tiffany.jpg',      hoverEmoji: '👠', role: 'Mentor' },
-  { name: 'ZapbyZZMyth',   img: '/mentors/zap.webp',         hoverEmoji: '🎬', role: 'Mentor' },
-  { name: 'MichaelTV',     img: '/mentors/Michaeltv.webp',   hoverEmoji: '📺', role: 'Mentor' },
-  { name: 'JesiWicks',     img: '/mentors/jesiwick.jpeg',    hoverEmoji: '☀️', role: 'Mentor' },
-  { name: 'TannerManor',   img: '/mentors/Andrewtanner.webp',hoverEmoji: '🦆', role: 'Mentor' },
-  { name: 'SandyZL',       img: '/mentors/SandyZl.jpeg',     hoverEmoji: '😺', role: 'Mentor' },
-  { name: 'Weird Rocket J',img: '/mentors/weirdrocket.jpeg', hoverEmoji: '🚀', role: 'Mentor' },
-  { name: 'SloppyYolk',    img: '/mentors/sloppy.jpeg',      hoverEmoji: '🥚', role: 'Mentor' },
-  { name: 'Erin Nicole',   img: '/mentors/Erin.webp',        hoverEmoji: '🍜', role: 'Mentor' },
-  { name: 'Steve Johnson', img: '/mentors/stevejohnson.webp',hoverEmoji: '🍉', role: 'Mentor' },
-  { name: 'Ken Jones',     img: '/mentors/kenjones.jpg',     hoverEmoji: '🦅', role: 'Community Ambassador' },
+  { name: 'AllieRanae',    img: '/mentors/AllieRanae.webp',  hoverEmoji: '👑' },
+  { name: 'RoRoTuck',      img: '/mentors/roro.webp',        hoverEmoji: '🍄' },
+  { name: 'Eva Caridad',   img: '/mentors/Eva.webp',         hoverEmoji: '🎨' },
+  { name: 'Tiffany Nisbet',img: '/mentors/tiffany.webp',     hoverEmoji: '👠' },
+  { name: 'ZapbyZZMyth',   img: '/mentors/zap.webp',         hoverEmoji: '🎬' },
+  { name: 'MichaelTV',     img: '/mentors/Michaeltv.webp',   hoverEmoji: '📺' },
+  { name: 'JesiWicks',     img: '/mentors/jesiwick.jpeg',    hoverEmoji: '☀️' },
+  { name: 'TannerManor',   img: '/mentors/Andrewtanner.webp',hoverEmoji: '🦆' },
+  { name: 'SandyZL',       img: '/mentors/SandyZl.jpeg',     hoverEmoji: '😺' },
+  { name: 'Weird Rocket J',img: '/mentors/weirdrocket.jpeg', hoverEmoji: '🚀' },
+  { name: 'SloppyYolk',    img: '/mentors/sloppy.jpeg',      hoverEmoji: '🥚' },
+  { name: 'Erin Nicole',   img: '/mentors/Erin.webp',        hoverEmoji: '🍜' },
+  { name: 'Steve Johnson', img: '/mentors/stevejohnson.webp',hoverEmoji: '🍉' },
 ]
 
 function getWobble(i) {
@@ -78,13 +77,7 @@ const TeamSection = forwardRef(function TeamSection({ opacity = 1 }, ref) {
           </div>
           <div className="team__row team__row--mentors">
             {MENTORS.map((m, i) => (
-              <MemberCard
-                key={m.name}
-                member={m}
-                role={m.role || 'Mentor'}
-                index={i + 100}
-                eager={false}
-              />
+              <MemberCard key={m.name} member={m} role="Mentor" index={i + 100} eager={false} />
             ))}
           </div>
         </div>
