@@ -189,7 +189,7 @@
 .closing__inner {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   gap: 12px;
   padding: 24px 28px;
   background: rgba(10, 10, 31, 0.78);
@@ -203,16 +203,26 @@
   transition: opacity 0.15s linear, transform 0.15s linear;
 }
 
+.closing__buttons {
+  align-self: center;
+}
+
 .closing__above {
   line-height: 1;
   letter-spacing: 0.02em;
   text-align: center;
   margin-bottom: 0;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .closing__headline {
   line-height: 1;
   text-align: center;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .closing__sub {

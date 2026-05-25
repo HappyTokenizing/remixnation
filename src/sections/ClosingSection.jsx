@@ -8,13 +8,13 @@ const ClosingSection = forwardRef(function ClosingSection({ opacity = 1 }, ref) 
         <div className="closing__inner" style={{ opacity, transform: `translateY(${(1 - opacity) * 24}px)` }}>
 
           <p className="display closing__above glow-yellow">
-            <FitText minSize={11} maxSize={32}>
+            <FitText minSize={10} maxSize={32}>
               {['WHAT ARE YOU WAITING FOR?']}
             </FitText>
           </p>
 
           <h2 className="display closing__headline readable">
-            <FitText minSize={26} maxSize={96}>
+            <FitText minSize={20} maxSize={96}>
               {[
                 <span key="join" style={{ color: '#25c2f8', WebkitTextFillColor: '#25c2f8', textShadow: '0 0 16px rgba(37,194,248,0.6)' }}>JOIN</span>,
                 <span key="nation" style={{ color: '#25c2f8', WebkitTextFillColor: '#25c2f8', textShadow: '0 0 16px rgba(37,194,248,0.6)' }}>THE NATION</span>

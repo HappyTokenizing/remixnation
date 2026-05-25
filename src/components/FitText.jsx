@@ -1,14 +1,17 @@
 import { useLayoutEffect, useRef, useState } from 'react'
 
 /**
- * Auto-shrinks its content's font-size until it fits within the parent
- * container on a single line per `<br>`-separated row. Keeps words
- * intact (never wraps mid-word).
+ * Auto-shrinks its content's font-size until each line fits the
+ * available width on a single line per `<br>`-separated row.
+ * Words are kept intact (never wraps mid-word).
  *
- * Default behavior: each child line is rendered with `white-space: nowrap`
- * and the whole component's font-size is shrunk until every line fits.
+ * Strategy: render an invisible measurement copy *inside* the same
+ * container (so it inherits the real constrained width), set candidate
+ * font sizes on it, measure each line's natural width by giving it
+ * `white-space: nowrap` and reading scrollWidth, and binary-search for
+ * the largest size where every line stays under the container's width.
  */
-export default function FitText({ children, className = '', minSize = 18, maxSize = 72 }) {
+export default function FitText({ children, className = '', minSize = 14, maxSize = 96 }) {
   const containerRef = useRef(null)
   const measureRef = useRef(null)
   const [fontSize, setFontSize] = useState(maxSize)
@@ -21,23 +24,19 @@ export default function FitText({ children, className = '', minSize = 18, maxSiz
     let raf = null
 
     const fit = () => {
-      const parent = containerEl.parentElement
-      if (!parent) return
+      // The container is display: block so its clientWidth is the
+      // real width we have to fit text into.
+      const availableWidth = containerEl.clientWidth
+      if (availableWidth <= 0) return
 
-      // Available width = parent inner width
-      const cs = getComputedStyle(parent)
-      const padX = parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight)
-      const availableWidth = parent.clientWidth - padX
-
-      // Binary search for the largest size that fits
       let low = minSize
       let high = maxSize
       let best = minSize
 
+      // Binary search: largest font size where every nowrap line fits
       while (low <= high) {
         const mid = Math.floor((low + high) / 2)
         measureEl.style.fontSize = `${mid}px`
-        // Find the widest line in the measure element
         const lines = measureEl.querySelectorAll('.fit-text__line')
         let widest = 0
         lines.forEach((line) => {
@@ -56,11 +55,12 @@ export default function FitText({ children, className = '', minSize = 18, maxSiz
 
     fit()
 
+    // Re-fit when the container's width changes (rotation, resize, etc.)
     const ro = new ResizeObserver(() => {
       if (raf) cancelAnimationFrame(raf)
       raf = requestAnimationFrame(fit)
     })
-    if (containerEl.parentElement) ro.observe(containerEl.parentElement)
+    ro.observe(containerEl)
 
     return () => {
       ro.disconnect()
@@ -68,14 +68,24 @@ export default function FitText({ children, className = '', minSize = 18, maxSiz
     }
   }, [children, minSize, maxSize])
 
-  // Split children into lines based on <br/> markers.
-  // We accept either an array of strings/elements or a single child.
-  // Lines are wrapped in nowrap spans for measurement and display.
   const lines = Array.isArray(children) ? children : [children]
 
   return (
-    <span ref={containerRef} className={`fit-text ${className}`} style={{ display: 'block', fontSize: `${fontSize}px`, lineHeight: 1 }}>
-      {/* Hidden measure copy — always at the candidate size, used to compute scrollWidth */}
+    <span
+      ref={containerRef}
+      className={`fit-text ${className}`}
+      style={{
+        display: 'block',
+        width: '100%',
+        fontSize: `${fontSize}px`,
+        lineHeight: 1,
+        position: 'relative'
+      }}
+    >
+      {/* Measure copy — invisible, but lives INSIDE the constrained
+          container so its lines wrap against the same width.
+          We give each line nowrap so scrollWidth reports the natural
+          width the line would want at the candidate font size. */}
       <span
         ref={measureRef}
         aria-hidden="true"
@@ -83,19 +93,25 @@ export default function FitText({ children, className = '', minSize = 18, maxSiz
           position: 'absolute',
           visibility: 'hidden',
           pointerEvents: 'none',
-          left: '-9999px',
           top: 0,
+          left: 0,
+          width: 'auto',
+          maxWidth: 'none',
           whiteSpace: 'nowrap'
         }}
       >
         {lines.map((line, i) => (
-          <span key={i} className="fit-text__line" style={{ display: 'block', whiteSpace: 'nowrap' }}>
+          <span
+            key={i}
+            className="fit-text__line"
+            style={{ display: 'block', whiteSpace: 'nowrap' }}
+          >
             {line}
           </span>
         ))}
       </span>
 
-      {/* Actual rendered content */}
+      {/* Actual rendered content at the resolved size */}
       {lines.map((line, i) => (
         <span key={i} style={{ display: 'block', whiteSpace: 'nowrap' }}>
           {line}
