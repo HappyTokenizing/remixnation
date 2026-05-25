@@ -1,5 +1,5 @@
 /* =========================================================
-   Happy's Remix Nation v3 — continuous scroll-driven pan/zoom
+   Happy's Remix Nation v8 — Global tokens
    ========================================================= */
 
 :root {
@@ -68,8 +68,6 @@ img { display: block; max-width: 100%; }
 
 /* =========================================================
    Banner stage — fixed layer, continuously driven by scroll
-   Short transition (no abrupt 1.2s jumps) since the values
-   themselves change continuously via JS.
    ========================================================= */
 
 .banner-stage {
@@ -87,17 +85,24 @@ img { display: block; max-width: 100%; }
   left: 50%;
   width: 100%;
   height: 100%;
+  /* Desktop: contain so full art is visible */
   object-fit: contain;
   transform: translate(-50%, -50%) scale(var(--banner-scale, 1));
   transform-origin: var(--banner-origin-x, 50%) var(--banner-origin-y, 50%);
-  /* Short transition smooths frame-to-frame; main motion comes from
-     the JS-driven CSS-var updates on every scroll frame. */
   transition: transform 0.15s linear, filter 0.3s ease;
   filter: var(--banner-filter, none);
   will-change: transform;
   background: var(--c-bg);
-  /* Disable native video controls/UI just in case */
   pointer-events: none;
+}
+
+/* Mobile: switch to cover so it fills the screen edge-to-edge
+   and we still get a visible image behind text */
+@media (max-width: 900px) {
+  .banner-stage__media {
+    object-fit: cover;
+    object-position: center center;
+  }
 }
 
 .banner-stage__vignette {
@@ -120,9 +125,7 @@ img { display: block; max-width: 100%; }
 }
 
 /* =========================================================
-   Scroll container
-   - scroll-snap: PROXIMITY (not mandatory) — gives a soft pull
-     toward sections but lets you stop mid-scroll to read.
+   Scroll container — proximity snap, no hard jumps
    ========================================================= */
 
 .scroll-container {
@@ -157,6 +160,13 @@ img { display: block; max-width: 100%; }
   height: 100%;
   padding: var(--site-padding-y) var(--site-padding-x);
   text-align: center;
+}
+
+/* Mobile: reduce section content padding significantly */
+@media (max-width: 900px) {
+  .section__content {
+    padding: 12px var(--site-padding-x);
+  }
 }
 
 /* Display type */
@@ -239,7 +249,7 @@ img { display: block; max-width: 100%; }
 .anim-pulse { animation: pulse-scale 2.5s ease-in-out infinite; }
 .anim-blink { animation: blink 1.2s steps(2) infinite; }
 
-/* Floating callout box */
+/* Callout box */
 .callout {
   display: inline-block;
   padding: 10px 14px;

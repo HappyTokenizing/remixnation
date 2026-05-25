@@ -1,20 +1,19 @@
 /* =========================================================
-   v3 — Compact text panels, opposite-side positioning,
-   scroll-progress fade-ins driven by inline styles.
+   Section styles v8 — mobile-first reductions
    ========================================================= */
 
 /* ============ HERO ============ */
 .hero .section__content {
   justify-content: flex-end;
-  padding-bottom: 8vh;
+  padding-bottom: 6vh;
 }
 
 .hero__bottom {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14px;
-  padding: 14px 24px;
+  gap: 10px;
+  padding: 12px 20px;
   background: rgba(10, 10, 31, 0.7);
   border: 2px solid rgba(255, 255, 255, 0.15);
   border-radius: 10px;
@@ -25,7 +24,7 @@
 
 .hero__tagline {
   font-family: var(--font-display);
-  font-size: max(20px, calc(var(--content-unit) * 32));
+  font-size: max(16px, calc(var(--content-unit) * 32));
   text-transform: uppercase;
   letter-spacing: 0.02em;
   line-height: 1;
@@ -33,10 +32,15 @@
 
 .hero__scroll {
   font-family: var(--font-display);
-  font-size: max(12px, calc(var(--content-unit) * 14));
+  font-size: max(10px, calc(var(--content-unit) * 14));
   color: var(--c-white);
   letter-spacing: 0.25em;
   opacity: 0.85;
+}
+
+@media (max-width: 900px) {
+  .hero .section__content { padding-bottom: 4vh; }
+  .hero__bottom { gap: 8px; padding: 10px 14px; }
 }
 
 /* ============ ZONE SECTIONS ============ */
@@ -87,7 +91,7 @@
 }
 
 .zone-text__eyebrow {
-  font-size: max(15px, calc(var(--content-unit) * 19));
+  font-size: max(13px, calc(var(--content-unit) * 19));
   text-transform: lowercase;
   margin-bottom: 2px;
   line-height: 1.2;
@@ -100,9 +104,9 @@
 }
 
 .zone-text__desc {
-  font-size: max(14px, calc(var(--content-unit) * 17));
+  font-size: max(13px, calc(var(--content-unit) * 17));
   color: rgba(255, 255, 255, 0.95);
-  line-height: 1.5;
+  line-height: 1.45;
 }
 
 .zone-text .callout {
@@ -110,13 +114,11 @@
   max-width: 100%;
   white-space: normal;
   line-height: 1.35;
-  padding: 10px 14px;
+  padding: 8px 12px;
   font-size: max(11px, calc(var(--content-unit) * 13));
 }
 
-.zone-text--bottom .callout {
-  align-self: center;
-}
+.zone-text--bottom .callout { align-self: center; }
 
 .zone-text__pills {
   display: flex;
@@ -145,7 +147,7 @@
 
 .stat-mini__num {
   font-family: var(--font-display);
-  font-size: max(24px, calc(var(--content-unit) * 32));
+  font-size: max(20px, calc(var(--content-unit) * 32));
   line-height: 1;
 }
 
@@ -156,52 +158,56 @@
   color: rgba(255, 255, 255, 0.65);
 }
 
-/* Mobile — collapse panels to a bottom bar */
+/* Mobile — collapse panels to bottom, reduce internal padding */
 @media (max-width: 900px) {
   .zone-text {
     top: auto !important;
-    bottom: 12vh !important;
+    bottom: 6vh !important;
     left: 50% !important;
     right: auto !important;
     transform: translateX(-50%) !important;
-    width: calc(100vw - 32px);
+    width: calc(100vw - 24px);
     max-width: none;
+    padding: 14px 16px;
+    gap: 8px;
+    max-height: 45vh;
   }
+  .zone-text__eyebrow { font-size: 12px; }
+  .zone-text__desc { font-size: 13px; }
+  .zone-text .callout { font-size: 11px; padding: 6px 10px; }
+  .zone-text__stats { gap: 12px; }
+  .stat-mini__num { font-size: 20px; }
 }
 
 /* ============ CLOSING ============ */
 .closing .section__content {
   justify-content: center;
   align-items: center;
+  padding: 12px var(--site-padding-x);
 }
 
 .closing__inner {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
-  padding: 32px 36px;
+  gap: 12px;
+  padding: 24px 28px;
   background: rgba(10, 10, 31, 0.78);
   border: 2px solid rgba(255, 255, 255, 0.18);
   border-radius: 16px;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   box-shadow: 0 8px 48px rgba(0, 0, 0, 0.5);
-  max-width: min(760px, calc(100vw - 32px));
+  max-width: min(700px, calc(100vw - 24px));
   width: 100%;
   transition: opacity 0.15s linear, transform 0.15s linear;
-}
-
-.closing__eyebrow {
-  font-size: max(18px, calc(var(--content-unit) * 24));
-  text-transform: lowercase;
 }
 
 .closing__above {
   line-height: 1;
   letter-spacing: 0.02em;
   text-align: center;
-  margin-bottom: 4px;
+  margin-bottom: 0;
 }
 
 .closing__headline {
@@ -210,9 +216,9 @@
 }
 
 .closing__sub {
-  font-size: max(15px, calc(var(--content-unit) * 18));
+  font-size: max(13px, calc(var(--content-unit) * 16));
   color: rgba(255, 255, 255, 0.85);
-  margin-bottom: 4px;
+  margin-bottom: 0;
   text-align: center;
 }
 
@@ -221,16 +227,16 @@
   gap: 12px;
   flex-wrap: wrap;
   justify-content: center;
-  margin: 8px 0;
+  margin: 4px 0;
 }
 
 .social-btn {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 14px 28px;
+  padding: 12px 24px;
   font-family: var(--font-display);
-  font-size: max(15px, calc(var(--content-unit) * 19));
+  font-size: max(14px, calc(var(--content-unit) * 17));
   letter-spacing: 0.05em;
   border: 2px solid var(--c-white);
   border-radius: 8px;
@@ -249,17 +255,22 @@
 .social-btn:active { transform: translate(2px, 2px); }
 
 .closing__footer {
-  margin-top: 8px;
-  font-size: 12px;
+  margin-top: 4px;
+  font-size: 11px;
   color: rgba(255, 255, 255, 0.5);
   letter-spacing: 0.05em;
   text-align: center;
 }
 
-/* ============ TEAM SECTION ============ */
-.team-section {
-  position: relative;
+@media (max-width: 900px) {
+  .closing__inner {
+    padding: 16px 16px;
+    gap: 8px;
+  }
 }
+
+/* ============ TEAM SECTION ============ */
+.team-section { position: relative; }
 
 .team-section__content {
   position: relative;
@@ -267,100 +278,134 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   width: 100%;
   height: 100%;
-  padding: 80px var(--site-padding-x) 40px;
-  gap: 12px;
+  /* Remove fixed height so content can scroll */
+  min-height: calc(var(--vh) * 100);
+  padding: 72px var(--site-padding-x) 24px;
+  gap: 8px;
   transition: opacity 0.15s linear;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Prevent team section from applying scroll-snap
+   since it needs internal scroll */
+#team {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  height: auto;
+  min-height: calc(var(--vh) * 100);
+  scroll-snap-align: start;
 }
 
 .team__eyebrow {
-  font-size: max(14px, calc(var(--content-unit) * 18));
+  font-size: max(13px, calc(var(--content-unit) * 18));
   text-transform: lowercase;
+  flex-shrink: 0;
 }
 
 .team__heading {
-  font-size: max(36px, calc(var(--content-unit) * 56));
+  font-size: max(28px, calc(var(--content-unit) * 56));
   line-height: 0.95;
   text-align: center;
+  flex-shrink: 0;
 }
 
 .team__grid {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 14px;
   width: 100%;
   max-width: 1200px;
-  margin-top: 8px;
+  margin-top: 4px;
+  padding-bottom: 24px;
 }
 
 .team__row {
   display: grid;
-  gap: 14px;
+  gap: 10px;
   justify-content: center;
 }
 
 .team__row--founders {
   grid-template-columns: repeat(4, minmax(120px, 160px));
+  order: 0;
 }
 
 .team__row--mentors {
-  grid-template-columns: repeat(7, minmax(100px, 130px));
+  grid-template-columns: repeat(7, minmax(90px, 120px));
+  order: 1;
 }
+
+/* Ensure founders always render first on all sizes */
+.team__grid { display: flex; flex-direction: column; }
+.team__row--founders { order: -1; }
 
 @media (max-width: 1100px) {
   .team__row--mentors {
-    grid-template-columns: repeat(5, minmax(100px, 130px));
+    grid-template-columns: repeat(5, minmax(90px, 120px));
   }
 }
 
 @media (max-width: 820px) {
+  .team-section__content {
+    padding: 64px 12px 20px;
+    gap: 6px;
+  }
+  .team__heading { font-size: 24px; }
+  .team__grid { gap: 10px; }
   .team__row--founders {
-    grid-template-columns: repeat(2, minmax(110px, 150px));
+    grid-template-columns: repeat(4, minmax(72px, 110px));
+    gap: 8px;
   }
   .team__row--mentors {
-    grid-template-columns: repeat(3, minmax(90px, 120px));
+    grid-template-columns: repeat(4, minmax(68px, 100px));
+    gap: 8px;
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 540px) {
+  .team__row--founders {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+  }
   .team__row--mentors {
-    grid-template-columns: repeat(2, minmax(80px, 110px));
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
   }
 }
 
 /* Member card with float + wobble */
 @keyframes member-wobble {
-  0%, 100% {
-    transform: translateY(0) rotate(calc(var(--tilt) * -1));
-  }
-  50% {
-    transform: translateY(-8px) rotate(var(--tilt));
-  }
+  0%, 100% { transform: translateY(0) rotate(calc(var(--tilt) * -1)); }
+  50% { transform: translateY(-8px) rotate(var(--tilt)); }
 }
 
 .member {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   animation-name: member-wobble;
   animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;
-  transition: transform 0.2s ease;
   will-change: transform;
+  cursor: pointer;
 }
 
-.member:hover {
-  animation-play-state: paused;
-  transform: scale(1.06) rotate(0deg) !important;
-  z-index: 5;
+/* Reduce wobble travel on mobile so cards don't clip */
+@media (max-width: 820px) {
+  @keyframes member-wobble {
+    0%, 100% { transform: translateY(0) rotate(calc(var(--tilt) * -0.5)); }
+    50% { transform: translateY(-4px) rotate(calc(var(--tilt) * 0.5)); }
+  }
 }
 
 .member__frame {
   width: 100%;
-  aspect-ratio: 1 / 1.15;
+  aspect-ratio: 1 / 1;
   border-radius: 10px;
   overflow: hidden;
   background: var(--c-bg-2);
@@ -368,13 +413,43 @@
   box-shadow:
     0 6px 20px rgba(0, 0, 0, 0.5),
     0 0 0 1px rgba(0, 191, 255, 0.15);
+  position: relative;
+}
+
+.member__frame img,
+.member__frame .member__hover-emoji {
+  width: 100%;
+  height: 100%;
+  display: block;
+  position: absolute;
+  top: 0; left: 0;
+  transition: opacity 0.2s ease;
 }
 
 .member__frame img {
-  width: 100%;
-  height: 100%;
   object-fit: cover;
-  display: block;
+  opacity: 1;
+}
+
+.member__hover-emoji {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(32px, 5vw, 56px);
+  background: rgba(10, 10, 31, 0.85);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.member:hover .member__frame img { opacity: 0; }
+.member:hover .member__hover-emoji { opacity: 1; }
+/* Touch: use :active for tap feedback on iOS */
+.member:active .member__frame img { opacity: 0; }
+.member:active .member__hover-emoji { opacity: 1; }
+
+.member:hover {
+  animation-play-state: paused;
+  z-index: 5;
 }
 
 .team__row--founders .member__frame {
@@ -386,7 +461,7 @@
 
 .member__name {
   font-family: var(--font-display);
-  font-size: max(11px, calc(var(--content-unit) * 13));
+  font-size: max(9px, calc(var(--content-unit) * 13));
   color: var(--c-white);
   letter-spacing: 0.02em;
   text-align: center;
@@ -395,7 +470,7 @@
 }
 
 .member__role {
-  font-size: max(10px, calc(var(--content-unit) * 11));
+  font-size: max(8px, calc(var(--content-unit) * 11));
   color: rgba(255, 255, 255, 0.7);
   letter-spacing: 0.05em;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
