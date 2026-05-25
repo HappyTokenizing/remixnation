@@ -143,7 +143,7 @@ img { display: block; max-width: 100%; }
 .scroll-container {
   position: relative;
   z-index: 1;
-  scroll-snap-type: y proximity;
+  scroll-snap-type: y mandatory;
   height: calc(var(--vh) * 100);
   overflow-y: scroll;
   scroll-behavior: smooth;
