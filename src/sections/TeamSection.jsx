@@ -1,14 +1,14 @@
 import { forwardRef } from 'react'
 
 const FOUNDERS = [
-  { name: 'Happy Remixing', img: '/mentors/happyremixing.jpeg', hoverEmoji: '😃' },
+  { name: 'HappyRemixing', img: '/mentors/happyremixing.jpeg', hoverEmoji: '😃' },
   { name: 'JonJonJovi',     img: '/mentors/jonjonjovi.gif',     hoverEmoji: '☠️' },
   { name: 'V1nmon',         img: '/mentors/v1nmon.gif',         hoverEmoji: '🦜' },
-  { name: 'Meeksipoo',      img: '/mentors/meeks.jpg',          hoverEmoji: '💩' },
+  { name: 'Meeksipoo',      img: '/mentors/meeks.gif',          hoverEmoji: '💩' },
 ]
 
 const MENTORS = [
-  { name: 'AllieRanae',    img: '/mentors/AllieRanae.webp',  hoverEmoji: '👑', role: 'Mentor' },
+  { name: 'Allie Ranae',   img: '/mentors/AllieRanae.webp',  hoverEmoji: '👑', role: 'Mentor' },
   { name: 'RoRoTuck',      img: '/mentors/roro.webp',        hoverEmoji: '🍄', role: 'Mentor' },
   { name: 'Eva Caridad',   img: '/mentors/Eva.webp',         hoverEmoji: '🎨', role: 'Mentor' },
   { name: 'Tiffany Nisbet',img: '/mentors/tiffany.jpg',      hoverEmoji: '👠', role: 'Mentor' },
