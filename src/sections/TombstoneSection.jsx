@@ -1,6 +1,7 @@
 import { forwardRef } from 'react'
 import ZoneText from '../components/ZoneText'
 import FitText from '../components/FitText'
+import SoraReveal from '../components/SoraReveal'
 
 const TombstoneSection = forwardRef(function TombstoneSection({ opacity = 1 }, ref) {
   return (
@@ -10,7 +11,7 @@ const TombstoneSection = forwardRef(function TombstoneSection({ opacity = 1 }, r
           <p className="marker zone-text__eyebrow glow-pink">in memory of</p>
           <h2 className="display zone-text__title">
             <FitText minSize={32} maxSize={72}>
-              {[<>R.I.P. <span key="g" className="glow-green">SORA</span></>]}
+              {[<>R.I.P. <SoraReveal /></>]}
             </FitText>
           </h2>
           <p className="zone-text__desc">

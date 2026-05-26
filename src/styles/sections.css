@@ -514,3 +514,115 @@
 .team__row--founders .member__role {
   color: var(--c-yellow);
 }
+
+/* ============ SORA REVEAL (Tombstone interactive word) ============ */
+.sora-reveal {
+  /* Inline-block so it sits naturally inside the FitText line.
+     Position relative so the tip can absolutely position above it. */
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  /* Use grid to stack the two words on top of each other so swapping
+     between SORA and STATS doesn't shift surrounding layout */
+  vertical-align: baseline;
+  outline: none;
+}
+
+.sora-reveal__word {
+  display: inline-block;
+  transition: opacity 0.18s ease;
+}
+
+/* The "alt" word (STATS) sits in the same flow position as the default
+   word — we use grid stacking to keep them in one box but only one
+   visible at a time. */
+.sora-reveal {
+  display: inline-grid;
+  grid-template-areas: 'stack';
+  align-items: baseline;
+}
+
+.sora-reveal__word--default,
+.sora-reveal__word--alt {
+  grid-area: stack;
+}
+
+.sora-reveal__word--default { opacity: 1; }
+.sora-reveal__word--alt    { opacity: 0; pointer-events: none; }
+
+.sora-reveal.is-active .sora-reveal__word--default { opacity: 0; }
+.sora-reveal.is-active .sora-reveal__word--alt    { opacity: 1; }
+
+/* Small floating tooltip "50% off: REMIX" above the word */
+.sora-reveal__tip {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background: var(--c-yellow);
+  color: var(--c-bg);
+  font-family: var(--font-display);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 5px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.4),
+    0 0 12px rgba(255, 217, 61, 0.5);
+  z-index: 10;
+  text-shadow: none;
+}
+
+/* Little caret under the tip pointing at the word */
+.sora-reveal__tip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: var(--c-yellow);
+}
+
+.sora-reveal.is-active .sora-reveal__tip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Subtle visual cue that the word is interactive */
+.sora-reveal:hover .sora-reveal__word,
+.sora-reveal:focus-visible .sora-reveal__word {
+  filter: brightness(1.1);
+}
+
+.sora-reveal:focus-visible {
+  outline: 2px solid var(--c-green-neon);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ============ TEAM MEMBER ROLE — fix mobile alignment for long roles ============ */
+.member__role {
+  /* Constrain to the card width and center any wrapped lines */
+  width: 100%;
+  white-space: normal;
+  word-break: keep-all;
+  hyphens: none;
+}
+
+@media (max-width: 820px) {
+  .member__role {
+    /* On mobile, allow "Community Ambassador" to wrap onto two lines
+       while staying centered like every other role label */
+    font-size: 9px;
+    line-height: 1.15;
+    letter-spacing: 0.03em;
+  }
+}
