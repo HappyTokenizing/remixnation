@@ -509,6 +509,9 @@
   color: rgba(255, 255, 255, 0.7);
   letter-spacing: 0.05em;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+  text-align: center;
+  width: 100%;
+  line-height: 1.15;
 }
 
 .team__row--founders .member__role {
@@ -610,7 +613,8 @@
 
 /* ============ TEAM MEMBER ROLE — fix mobile alignment for long roles ============ */
 .member__role {
-  /* Constrain to the card width and center any wrapped lines */
+  /* Centered with proper wrapping for long roles like "Community Ambassador" */
+  text-align: center;
   width: 100%;
   white-space: normal;
   word-break: keep-all;
@@ -624,5 +628,6 @@
     font-size: 9px;
     line-height: 1.15;
     letter-spacing: 0.03em;
+    text-align: center;
   }
 }

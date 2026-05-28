@@ -19,8 +19,6 @@ const MENTORS = [
   { name: 'SandyZL',       img: '/mentors/SandyZl.jpeg',     hoverEmoji: '😺', role: 'Mentor' },
   { name: 'Weird Rocket J',img: '/mentors/weirdrocket.jpeg', hoverEmoji: '🚀', role: 'Mentor' },
   { name: 'SloppyYolk',    img: '/mentors/sloppy.jpeg',      hoverEmoji: '🥚', role: 'Mentor' },
-  { name: 'Erin Nicole',   img: '/mentors/Erin.webp',        hoverEmoji: '🍜', role: 'Mentor' },
-  { name: 'Steve Johnson', img: '/mentors/stevejohnson.webp',hoverEmoji: '🍉', role: 'Mentor' },
   { name: 'Ken Jones',     img: '/mentors/kenjones.jpg',     hoverEmoji: '🦅', role: 'Community Ambassador' },
 ]
 
