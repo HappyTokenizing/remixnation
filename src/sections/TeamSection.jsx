@@ -2,15 +2,12 @@ import { forwardRef } from 'react'
 
 const FOUNDERS = [
   { name: 'HappyRemixing', img: '/mentors/happyremixing.jpeg', hoverEmoji: '😃' },
-  { name: 'JonJonJovi',     img: '/mentors/jonjonjovi.gif',     hoverEmoji: '☠️' },
-  { name: 'V1nmon',         img: '/mentors/v1nmon.gif',         hoverEmoji: '🦜' },
   { name: 'Meeksipoo',      img: '/mentors/meeks.gif',          hoverEmoji: '💩' },
 ]
 
 const MENTORS = [
   { name: 'Allie Ranae',   img: '/mentors/AllieRanae.webp',  hoverEmoji: '👑', role: 'Mentor' },
   { name: 'RoRoTuck',      img: '/mentors/roro.webp',        hoverEmoji: '🍄', role: 'Mentor' },
-  { name: 'Eva Caridad',   img: '/mentors/Eva.webp',         hoverEmoji: '🎨', role: 'Mentor' },
   { name: 'Tiffany Nisbet',img: '/mentors/tiffany.jpg',      hoverEmoji: '👠', role: 'Mentor' },
   { name: 'ZapbyZZMyth',   img: '/mentors/zap.webp',         hoverEmoji: '🎬', role: 'Mentor' },
   { name: 'MichaelTV',     img: '/mentors/Michaeltv.webp',   hoverEmoji: '📺', role: 'Mentor' },
@@ -44,7 +41,8 @@ function MemberCard({ member, role, index, eager }) {
           src={member.img}
           alt={member.name}
           loading={eager ? 'eager' : 'lazy'}
-          decoding={eager ? 'sync' : 'async'}
+          decoding="async"
+          fetchpriority={eager ? 'high' : undefined}
         />
         {member.hoverEmoji && (
           <div className="member__hover-emoji" aria-hidden="true">

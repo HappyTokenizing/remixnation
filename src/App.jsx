@@ -33,9 +33,13 @@ export default function App() {
   const { activeIndex, rawProgress } = useScrollProgress(containerRef, SECTION_COUNT)
 
   const handleNavigate = (i) => {
-    if (!containerRef.current) return
-    containerRef.current.scrollTo({
-      top: i * window.innerHeight,
+    const container = containerRef.current
+    if (!container) return
+    const sections = container.querySelectorAll(':scope > .section')
+    const target = sections[i]
+    if (!target) return
+    container.scrollTo({
+      top: target.offsetTop,
       behavior: 'smooth'
     })
   }

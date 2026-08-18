@@ -34,6 +34,13 @@ export default function SoraReveal() {
     }
   }
 
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault()
+      handleClick(e)
+    }
+  }
+
   const handleEnter = () => {
     if (isHoverCapable()) setActive(true)
   }
@@ -58,6 +65,7 @@ export default function SoraReveal() {
       ref={rootRef}
       className={`sora-reveal${active ? ' is-active' : ''}`}
       onClick={handleClick}
+      onKeyDown={handleKeyDown}
       onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}
       role="button"

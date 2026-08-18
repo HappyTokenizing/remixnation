@@ -303,23 +303,20 @@
   align-items: center;
   justify-content: flex-start;
   width: 100%;
-  height: 100%;
-  /* Remove fixed height so content can scroll */
   min-height: calc(var(--vh) * 100);
-  padding: 72px var(--site-padding-x) 24px;
+  padding: 72px var(--site-padding-x) 32px;
   gap: 8px;
   transition: opacity 0.15s linear;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
 }
 
-/* Prevent team section from applying scroll-snap
-   since it needs internal scroll */
+/* The team section grows with its content and the page's single outer
+   scroller moves through it. No nested scrollbars — nested scrolling
+   inside a snap container is janky on iOS, and the offset-aware
+   useScrollProgress hook handles the extra height correctly. */
 #team {
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
   height: auto;
   min-height: calc(var(--vh) * 100);
+  overflow: visible;
   scroll-snap-align: start;
 }
 
@@ -353,7 +350,7 @@
 }
 
 .team__row--founders {
-  grid-template-columns: repeat(4, minmax(120px, 160px));
+  grid-template-columns: repeat(2, minmax(120px, 160px));
   order: 0;
 }
 
@@ -381,7 +378,7 @@
   .team__heading { font-size: 24px; }
   .team__grid { gap: 10px; }
   .team__row--founders {
-    grid-template-columns: repeat(4, minmax(72px, 110px));
+    grid-template-columns: repeat(2, minmax(72px, 110px));
     gap: 8px;
   }
   .team__row--mentors {
@@ -392,7 +389,7 @@
 
 @media (max-width: 540px) {
   .team__row--founders {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(2, minmax(80px, 120px));
     gap: 6px;
   }
   .team__row--mentors {

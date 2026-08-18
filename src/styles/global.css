@@ -148,6 +148,8 @@ img { display: block; max-width: 100%; }
   overflow-y: scroll;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
+  /* Stop pull-to-refresh / rubber-band chaining from hijacking swipes */
+  overscroll-behavior-y: contain;
 }
 
 .scroll-container::-webkit-scrollbar { display: none; }
@@ -158,6 +160,8 @@ img { display: block; max-width: 100%; }
   width: 100vw;
   height: calc(var(--vh) * 100);
   scroll-snap-align: start;
+  /* Never skip a section on a fast flick — always settle on the next one */
+  scroll-snap-stop: always;
   overflow: hidden;
 }
 
@@ -282,3 +286,25 @@ img { display: block; max-width: 100%; }
 .callout--green { box-shadow: 4px 4px 0 var(--c-green-neon); }
 .callout--blue { box-shadow: 4px 4px 0 var(--c-blue-electric); }
 .callout--yellow { box-shadow: 4px 4px 0 var(--c-yellow); }
+
+/* =========================================================
+   Reduced motion — respect the OS-level accessibility setting.
+   Decorative animations off; scroll snapping and layout unchanged.
+   ========================================================= */
+@media (prefers-reduced-motion: reduce) {
+  .anim-wiggle,
+  .anim-float,
+  .anim-pulse,
+  .anim-blink,
+  .member {
+    animation: none !important;
+  }
+  .scroll-container {
+    scroll-behavior: auto;
+  }
+  .banner-stage__media,
+  .banner-stage__vignette,
+  .banner-stage__tint {
+    transition: none;
+  }
+}
